@@ -72,3 +72,15 @@ function mkcd() { mkdir -p "$@" && cd "$_"; }
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go;
 export PATH=$PATH:$GOPATH/bin;
+
+bindkey -v
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
